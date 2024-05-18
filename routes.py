@@ -1,10 +1,12 @@
 import sys
+import random
 from flask import Blueprint, jsonify, request
 from Lobby import Lobby
 from LobbyManager import LobbyManager
 from Player import Player
 import random
 from question import questions
+from Card import Card
 
 routes = Blueprint('routes', __name__)
 
@@ -103,7 +105,6 @@ def play_card():
 
     return '', 200
 
-
 @routes.route('/question', methods=['GET'])
 def choose_question():
     question_id = random.randint(0, len(questions) - 1)
@@ -114,3 +115,8 @@ def choose_question():
         "max": questions[question_id]["max"],
         "tolerance": questions[question_id]["tolerance"]
     })
+
+@routes.route('/draw', methods=['GET'])
+def draw_card():
+    value = Card.generateRandom()
+    return jsonify({"value": value}), 200
