@@ -1,14 +1,13 @@
 import sys
 
 from flask import Blueprint, jsonify, request
-from Lobby import Lobby, LobbyManager
+from Lobby import Lobby
+from LobbyManager import LobbyManager
 from Player import Player
 
 routes = Blueprint('routes', __name__)
 
 lobby_manager = LobbyManager()
-lobby_manager.__init__()
-
 
 @routes.route('/ping', methods=['GET'])
 def ping():
