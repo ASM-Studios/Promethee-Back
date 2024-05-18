@@ -3,15 +3,31 @@ import uuid as uuidGen
 from Player import Player
 
 class Lobby:
+    class LobbyFull(Exception):
+        def __init__(self):
+            super().__init__("Lobby is full")
+
+    class AlreadyConnected(Exception):
+        def __init__(self):
+            super().__init__("User is already connected")
+
     def __init__(self, uuid, maxUser = 8):
         self.__uuid = uuid
         self.__players = []
         self.__maxUser = maxUser
 
-    def addUser(self, player: Player):
-        if (self.isFull):
-            raise Exception("Lobby is full")
+    def isConnected(self, player):
+        for i in self.__players:
+            if (i.getName() == player.getName()):
+                return True
+        return False
+
+    def addUser(self, player):
+        if (self.isFull()):
+            raise self.LobbyFull()
         else:
+            if (self.isConnected(player)):
+                raise self.AlreadyConnected()
             self.__players.append(player)
 
     def isFull(self):
@@ -42,3 +58,4 @@ class LobbyManager:
             uuid = self.generateUUID().upper()
         newLobby = Lobby(uuid)
         self.__lobby.append(newLobby)
+        return newLobby

@@ -23,4 +23,7 @@ def quiz():
     return render_template('quiz.html', question=question)
 
 if __name__ == '__main__':
+    lobby = lobbyManager.createLobby("aaaaa")
+    player = Player("claude")
+    lobby.addUser(player)
     app.run(host='0.0.0.0', debug=True)

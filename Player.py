@@ -3,6 +3,12 @@ class Player:
         self.__name = name
         self.__life = life
 
+    def getName(self):
+        return self.__name
+
+    def setName(self, name):
+        self.__name = name
+
     def getLife(self):
         return self.__life
 
