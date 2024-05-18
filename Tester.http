@@ -1,17 +1,17 @@
 ### Enter Lobby By ID (with lobby_id)
-GET http://10.109.250.10:8080/ping
+GET http://10.109.250.10:5000/ping
 
 ### Enter Lobby By ID (without lobby_id)
-POST http://10.109.250.10:8080/enter_lobby_by_id
+POST http://10.109.250.10:5000/enter_lobby_by_id
 Content-Type: application/json
 
 {
-    "lobby_id": "ABCDE",
+    "lobbyId": "ABCDE",
     "username": "John"
 }
 
 ### PlayCard
-POST http://10.109.250.10:8080/play_card
+POST http://10.109.250.10:5000/play_card
 Content-Type: application/json
 
 {
