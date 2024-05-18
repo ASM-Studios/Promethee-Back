@@ -1,10 +1,8 @@
-from routes import routes, lobby_manager
-from flask import Blueprint, jsonify, request
-from LobbyManager import LobbyManager
-from Player import Player
-import sys
+from flask import Blueprint, jsonify
 import random
-from ..question import questions
+from lobby import *
+
+routes = Blueprint('routes', __name__)
 
 @routes.route('/question', methods=['GET'])
 def choose_question():

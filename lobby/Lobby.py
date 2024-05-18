@@ -1,6 +1,4 @@
 from Player import Player
-import sys
-
 
 class Lobby:
     class LobbyFull(Exception):

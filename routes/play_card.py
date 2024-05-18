@@ -1,8 +1,7 @@
-from routes import routes, lobby_manager
 from flask import Blueprint, jsonify, request
-from LobbyManager import LobbyManager
-from Player import Player
-import sys
+from routes.routes import lobby_manager
+
+routes = Blueprint('routes', __name__)
 
 @routes.route('/play_card', methods=['POST'])
 def play_card():
@@ -46,4 +45,3 @@ def play_card():
         return jsonify({"error": "Invalid action"}), 400
 
     return '', 200
-

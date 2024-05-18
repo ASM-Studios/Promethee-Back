@@ -1,9 +1,7 @@
-from routes import routes, lobby_manager
-from flask import Blueprint, jsonify, request
-from LobbyManager import LobbyManager
-from Player import Player
-import sys
-from Card import Card
+from flask import Blueprint, jsonify
+from lobby.Card import Card
+
+routes = Blueprint('routes', __name__)
 
 @routes.route('/draw', methods=['GET'])
 def draw_card():

@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, redirect, url_for
-import random
-from question import questions
-from Player import Player
-from Lobby import Lobby
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from routes.routes import routes
-from Card import Card
 
 app = Flask(__name__)
 CORS(app)

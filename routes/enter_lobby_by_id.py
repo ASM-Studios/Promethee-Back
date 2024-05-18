@@ -1,8 +1,9 @@
-from routes import routes, lobby_manager
+from routes import lobby_manager
 from flask import Blueprint, jsonify, request
-from LobbyManager import LobbyManager
-from Player import Player
+from lobby.Player import Player
 import sys
+
+routes = Blueprint('routes', __name__)
 
 @routes.route('/enter_lobby_by_id', methods=['POST'])
 def enter_lobby_by_id():

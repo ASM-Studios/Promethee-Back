@@ -1,15 +1,11 @@
-import sys
-import random
-from flask import Blueprint, jsonify, request
-from Lobby import Lobby
-from LobbyManager import LobbyManager
-from Player import Player
-import random
-from Card import Card
+from flask import Blueprint
+from routes import *
 
 routes = Blueprint('routes', __name__)
-
-lobby_manager = LobbyManager()
+routes.register(question_routes)
+routes.register(play_card_routes)
+routes.register(enter_lobby_by_id_routes)
+routes.register(draw_routes)
 
 @routes.route('/ping', methods=['GET'])
 def ping():
