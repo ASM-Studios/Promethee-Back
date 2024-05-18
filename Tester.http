@@ -1,0 +1,23 @@
+### Enter Lobby By ID (with lobby_id)
+GET http://10.109.250.10:8080/ping
+
+### Enter Lobby By ID (without lobby_id)
+POST http://10.109.250.10:8080/enter_lobby_by_id
+Content-Type: application/json
+
+{
+    "lobby_id": "ABCDE",
+    "username": "John"
+}
+
+### PlayCard
+POST http://10.109.250.10:8080/play_card
+Content-Type: application/json
+
+{
+    "lobby_id": "123",
+    "username": "John",
+    "value": 10,
+    "action": "heal",
+    "target": "Jane"
+}
