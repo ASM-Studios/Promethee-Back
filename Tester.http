@@ -10,14 +10,44 @@ Content-Type: application/json
     "username": "John"
 }
 
-### PlayCard
+### Enter Lobby By ID (with lobby_id)
+POST http://10.109.250.10:5000/enter_lobby_by_id
+Content-Type: application/json
+
+{
+    "lobbyId": "ABCDE",
+    "username": "Michel"
+}
+
+### Enter Lobby By ID (with lobby_id)
+POST http://10.109.250.10:5000/enter_lobby_by_id
+Content-Type: application/json
+
+{
+    "lobbyId": "ABCDE",
+    "username": "Joe"
+}
+
+### PlayCard (Heal)
 POST http://10.109.250.10:5000/play_card
 Content-Type: application/json
 
 {
-    "lobby_id": "123",
+    "lobbyId": "ABCDE",
     "username": "John",
     "value": 10,
-    "action": "heal",
-    "target": "Jane"
+    "action": "heal"
 }
+
+### PlayCard (Damage)
+POST http://10.109.250.10:5000/play_card
+Content-Type: application/json
+
+{
+    "lobbyId": "ABCDE",
+    "username": "John",
+    "value": 10,
+    "action": "damage",
+    "target": "Michel"
+}
+

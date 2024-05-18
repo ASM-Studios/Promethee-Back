@@ -7,7 +7,6 @@ from Player import Player
 routes = Blueprint('routes', __name__)
 
 lobby_manager = LobbyManager()
-lobby_manager.__init__()
 
 
 @routes.route('/ping', methods=['GET'])
@@ -47,13 +46,14 @@ def enter_lobby_by_id():
         return jsonify({
             "lobbyId": new_lobby.getUUID(),
             "creator": player.getName(),
-            "users": [player.getName()]
+            "users": [new_lobby.getCreator()]
         })
     for lobby in lobby_manager.get_lobbies():
-        print(lobby.getUUID(), sys.stderr)
+        print(lobby.getUUID(), file=sys.stderr)
         for player in lobby.getPlayers():
-            print(player.getName(), sys.stderr)
+            print(player.getName(), file=sys.stderr)
     return '', 200
+
 
 @routes.route('/play_card', methods=['POST'])
 def play_card():
@@ -67,6 +67,7 @@ def play_card():
     # Find the lobby
     for lobby in lobby_manager.get_lobbies():
         if lobby.getUUID() == lobbyId:
+            print(lobby.getUUID(), file=sys.stderr)
             break
     else:
         return jsonify({"error": "Lobby not found"}), 400
@@ -75,6 +76,7 @@ def play_card():
     player = None
     target_player = None
     for player_ in lobby.getPlayers():
+        print(f"player = {player_.getName()}", file=sys.stderr)
         if player_.getName() == username:
             player = player_
         if player_.getName() == target:
@@ -83,6 +85,10 @@ def play_card():
         return jsonify({"error": "Player not found"}), 400
     if not target_player and target is not None:
         return jsonify({"error": "Target not found"}), 400
+
+    # Check if the target is valid
+    if target is not None and not any(player.getName() == target for player in lobby.getPlayers()):
+        return jsonify({"error": "Invalid target"}), 400
 
     # Apply the card
     if action == 'heal':
