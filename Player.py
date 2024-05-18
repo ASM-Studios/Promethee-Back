@@ -1,3 +1,6 @@
+HEAL = 0
+DAMAGE = 1
+
 class Player:
     def __init__(self, name, life = 20):
         self.__name = name

@@ -1,6 +1,5 @@
-import uuid as uuidGen
-
 from Player import Player
+import uuid as uuidGen
 
 class Lobby:
     class LobbyFull(Exception):
@@ -46,16 +45,16 @@ class LobbyManager:
     def generateUUID(self):
         return uuidGen.uuid4().__str__()[0:5]
 
-    def alreadyExist(self, uuid):
+    def alreadyExist(self, lobbyID):
         for i in self.__lobby:
-            if (i.getUUID() == uuid):
+            if (i.getUUID() == lobbyID):
                 return True
         return False
 
-    def createLobby(self, uuid):
-        uuid = uuid.upper()
-        while (self.alreadyExist(uuid) == True):
-            uuid = self.generateUUID().upper()
-        newLobby = Lobby(uuid)
+    def createLobby(self, lobbyID):
+        lobbyID = lobbyID.upper()
+        while (self.alreadyExist(lobbyID) == True):
+            lobbyID = self.generateUUID().upper()
+        newLobby = Lobby(lobbyID)
         self.__lobby.append(newLobby)
         return newLobby
