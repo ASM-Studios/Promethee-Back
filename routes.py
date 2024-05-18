@@ -1,5 +1,4 @@
 import sys
-
 from flask import Blueprint, jsonify, request
 from Lobby import Lobby
 from LobbyManager import LobbyManager
@@ -8,6 +7,7 @@ from Player import Player
 routes = Blueprint('routes', __name__)
 
 lobby_manager = LobbyManager()
+
 
 @routes.route('/ping', methods=['GET'])
 def ping():
@@ -25,15 +25,16 @@ def enter_lobby_by_id():
     if lobbyId:
         for lobby in lobby_manager.get_lobbies():
             if lobby.getUUID() == lobbyId:
-                # Check if the username is already taken
-                if any(player.getName() == p.getName() for p in lobby.getPlayers()):
-                    return jsonify({"error": "Username is already taken"}), 400
+                for p in lobby.getUsers():
+                    print(p.getName(), file=sys.stderr)
+                    if p.getName() == player.getName():
+                        return jsonify({"error": "Username is already taken"}), 400
                 try:
                     lobby.addUser(player)
                     return jsonify({
                         "lobbyId": lobbyId,
                         "creator": lobby.getCreator(),
-                        "users": [player.getName() for player in lobby.getPlayers()]
+                        "players": lobby.getPlayers()
                     })
                 except Exception as e:
                     return jsonify({"error": str(e)}), 400
@@ -46,13 +47,14 @@ def enter_lobby_by_id():
         return jsonify({
             "lobbyId": new_lobby.getUUID(),
             "creator": player.getName(),
-            "users": [player.getName()]
+            "players": [{"username": player.getName(), "life": player.getLife()}]
         })
     for lobby in lobby_manager.get_lobbies():
-        print(lobby.getUUID(), sys.stderr)
+        print(lobby.getUUID(), file=sys.stderr)
         for player in lobby.getPlayers():
-            print(player.getName(), sys.stderr)
+            print(player.getName(), file=sys.stderr)
     return '', 200
+
 
 @routes.route('/play_card', methods=['POST'])
 def play_card():

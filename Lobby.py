@@ -1,6 +1,7 @@
 from Player import Player
 import sys
 
+
 class Lobby:
     class LobbyFull(Exception):
         def __init__(self):
@@ -10,25 +11,25 @@ class Lobby:
         def __init__(self):
             super().__init__("User is already connected")
 
-    def __init__(self, uuid, maxUser = 8):
+    def __init__(self, uuid, maxUser=8):
         self.__creator = None
         self.__uuid = uuid
-        self.__players = []
+        self.__players = {}
         self.__maxUser = maxUser
 
     def isConnected(self, player):
         for i in self.__players:
-            if (i.getName() == player.getName()):
+            if i.getName() == player.getName():
                 return True
         return False
 
-    def addUser(self, player):
-        if (self.isFull()):
+    def addUser(self, username: str):
+        print(username, file=sys.stderr)
+        if self.isFull():
             raise self.LobbyFull()
         else:
-            if (self.isConnected(player)):
-                raise self.AlreadyConnected()
-            self.__players.append(player)
+            player = Player(username)
+            self.__players[player.getName()] = player
 
     def isFull(self):
         if len(self.__players) >= self.__maxUser:
@@ -46,4 +47,13 @@ class Lobby:
         self.__creator = creator
 
     def getPlayers(self):
-        return self.__players
+        return [{"username": player.getName(), "life": player.getLife()} for player in self.__players]
+
+    def getPlayer(self, username):
+        for player in self.__players:
+            if player.getName() == username:
+                return player
+        return None
+
+    def getUsers(self):
+        return list(self.__players.values())
