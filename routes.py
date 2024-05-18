@@ -3,6 +3,8 @@ from flask import Blueprint, jsonify, request
 from Lobby import Lobby
 from LobbyManager import LobbyManager
 from Player import Player
+import random
+from question import questions
 
 routes = Blueprint('routes', __name__)
 
@@ -100,3 +102,15 @@ def play_card():
         return jsonify({"error": "Invalid action"}), 400
 
     return '', 200
+
+
+@routes.route('/question', methods=['GET'])
+def choose_question():
+    question_id = random.randint(0, len(questions) - 1)
+    return jsonify({
+        "question": questions[question_id]["question"],
+        "expected": questions[question_id]["expected"],
+        "min": questions[question_id]["min"],
+        "max": questions[question_id]["max"],
+        "tolerance": questions[question_id]["tolerance"]
+    })
