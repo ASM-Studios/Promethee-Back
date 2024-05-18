@@ -1,5 +1,5 @@
 import uuid as uuidGen
-from Lobby import Lobby
+from . import *
 
 class LobbyManager:
     def __init__(self):
@@ -24,3 +24,5 @@ class LobbyManager:
 
     def get_lobbies(self):
         return self.__lobby
+
+lobby_manager = LobbyManager()

@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
-from routes.routes import lobby_manager
+from lobby import lobby_manager
 
-routes = Blueprint('routes', __name__)
+play_card_routes = Blueprint('play_card', __name__)
 
-@routes.route('/play_card', methods=['POST'])
+@play_card_routes.route('/play_card', methods=['POST'])
 def play_card():
     data = request.get_json()
     lobbyId = data.get('lobbyId')

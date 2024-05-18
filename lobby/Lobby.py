@@ -1,4 +1,4 @@
-from Player import Player
+from . import *
 
 class Lobby:
     class LobbyFull(Exception):

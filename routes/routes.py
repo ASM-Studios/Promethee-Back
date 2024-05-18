@@ -1,11 +1,11 @@
 from flask import Blueprint
-from routes import *
+from . import play_card_routes, question_routes, enter_lobby_by_id_routes, draw_routes
 
 routes = Blueprint('routes', __name__)
-routes.register(question_routes)
-routes.register(play_card_routes)
-routes.register(enter_lobby_by_id_routes)
-routes.register(draw_routes)
+routes.register_blueprint(play_card_routes)
+routes.register_blueprint(question_routes)
+routes.register_blueprint(enter_lobby_by_id_routes)
+routes.register_blueprint(draw_routes)
 
 @routes.route('/ping', methods=['GET'])
 def ping():

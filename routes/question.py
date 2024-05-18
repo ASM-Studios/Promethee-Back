@@ -1,10 +1,10 @@
 from flask import Blueprint, jsonify
 import random
-from lobby import *
+from lobby import questions
 
-routes = Blueprint('routes', __name__)
+question_routes = Blueprint('questions', __name__)
 
-@routes.route('/question', methods=['GET'])
+@question_routes.route('/question', methods=['GET'])
 def choose_question():
     question_id = random.randint(0, len(questions) - 1)
     return jsonify({

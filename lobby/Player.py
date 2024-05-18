@@ -1,4 +1,4 @@
-from Card import Card
+from . import *
 
 HEAL = 0
 DAMAGE = 1

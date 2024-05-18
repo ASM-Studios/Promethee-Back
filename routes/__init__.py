@@ -1,8 +1,6 @@
-from .play_card import routes as play_card_routes
-from .question import routes as question_routes
-from .enter_lobby_by_id import routes as enter_lobby_by_id_routes
-from .draw import routes as draw_routes
+from .draw import draw_routes
+from .enter_lobby_by_id import enter_lobby_by_id_routes
+from .play_card import play_card_routes
+from .question import question_routes
 
-from lobby.LobbyManager import LobbyManager
-
-lobby_manager = LobbyManager()
+__all__ = [draw_routes, enter_lobby_by_id, play_card, question]
