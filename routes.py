@@ -1,24 +1,24 @@
+import sys
+
 from flask import Blueprint, jsonify, request
-from flask_cors import CORS, cross_origin
 from Lobby import Lobby, LobbyManager
 from Player import Player
 
 routes = Blueprint('routes', __name__)
 
 lobby_manager = LobbyManager()
+lobby_manager.__init__()
 
 
 @routes.route('/ping', methods=['GET'])
-@cross_origin()
 def ping():
     return '', 200
 
 
 @routes.route('/enter_lobby_by_id', methods=['POST'])
-@cross_origin()
 def enter_lobby_by_id():
     data = request.get_json()
-    lobbyId = data.get('lobbyId')  # changed to camelCase
+    lobbyId = data.get('lobbyId')
     username = data.get('username')
 
     player = Player(username)
@@ -26,42 +26,39 @@ def enter_lobby_by_id():
     if lobbyId:
         for lobby in lobby_manager.get_lobbies():
             if lobby.getUUID() == lobbyId:
+                # Check if the username is already taken
+                if any(player.getName() == p.getName() for p in lobby.getPlayers()):
+                    return jsonify({"error": "Username is already taken"}), 400
                 try:
                     lobby.addUser(player)
                     return jsonify({
-                        "lobbyId": lobbyId,  # changed to camelCase
-                        "creator": lobby.getPlayers()[0].getName(),
+                        "lobbyId": lobbyId,
+                        "creator": lobby.getCreator(),
                         "users": [player.getName() for player in lobby.getPlayers()]
                     })
                 except Exception as e:
                     return jsonify({"error": str(e)}), 400
 
         # Create a new lobby if it doesn't exist
-        new_lobby = Lobby(lobbyId)
+        new_lobby = lobby_manager.createLobby(lobbyId)
         new_lobby.addUser(player)
+        new_lobby.addCreator(player.getName())
         lobby_manager.get_lobbies().append(new_lobby)
         return jsonify({
-            "lobbyId": new_lobby.getUUID(),  # changed to camelCase
+            "lobbyId": new_lobby.getUUID(),
             "creator": player.getName(),
             "users": [player.getName()]
         })
-    else:
-        # Create a new lobby with a random UUID
-        new_lobby = Lobby(None)
-        new_lobby.addUser(player)
-        lobby_manager.get_lobbies().append(new_lobby)
-        return jsonify({
-            "lobbyId": new_lobby.getUUID(),  # changed to camelCase
-            "creator": player.getName(),
-            "users": [player.getName()]
-        })
-
+    for lobby in lobby_manager.get_lobbies():
+        print(lobby.getUUID(), sys.stderr)
+        for player in lobby.getPlayers():
+            print(player.getName(), sys.stderr)
+    return '', 200
 
 @routes.route('/play_card', methods=['POST'])
-@cross_origin()
 def play_card():
     data = request.get_json()
-    lobbyId = data.get('lobbyId')  # changed to camelCase
+    lobbyId = data.get('lobbyId')
     username = data.get('username')
     value = data.get('value')
     action = data.get('action')

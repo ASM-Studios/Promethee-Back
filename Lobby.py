@@ -1,5 +1,6 @@
 from Player import Player
 import uuid as uuidGen
+import sys
 
 class Lobby:
     class LobbyFull(Exception):
@@ -11,6 +12,7 @@ class Lobby:
             super().__init__("User is already connected")
 
     def __init__(self, uuid, maxUser = 8):
+        self.__creator = None
         self.__uuid = uuid
         self.__players = []
         self.__maxUser = maxUser
@@ -30,13 +32,19 @@ class Lobby:
             self.__players.append(player)
 
     def isFull(self):
-        if len(self.__players) == self.__maxUser:
+        if len(self.__players) >= self.__maxUser:
             return True
         else:
             return False
 
     def getUUID(self):
         return self.__uuid
+
+    def getCreator(self):
+        return self.__creator
+
+    def addCreator(self, creator):
+        self.__creator = creator
 
     def getPlayers(self):
         return self.__players
