@@ -20,6 +20,3 @@ class Player:
 
     def __str__(self):
         return self.__name
-
-    def getName(self):
-        return self.__name
