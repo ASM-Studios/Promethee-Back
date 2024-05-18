@@ -11,7 +11,8 @@ class Lobby:
     def addUser(self, player: Player):
         if (self.isFull):
             raise Exception("Lobby is full")
-        self.__players.append(player)
+        else:
+            self.__players.append(player)
 
     def isFull(self):
         if (len(self.__players) == self.__maxUser):
@@ -26,10 +27,18 @@ class LobbyManager:
     def __init__(self):
         self.__lobby = []
 
-    def createLobby(self, uuid):
+    def generateUUID(self):
+        return uuidGen.uuid4().__str__()[0:5]
+
+    def alreadyExist(self, uuid):
         for i in self.__lobby:
-            if (uuid == i.getUUID()):
-                uuid = uuidGen.uuid4().__str__()[0:6]
+            if (i.getUUID() == uuid):
+                return True
+        return False
+
+    def createLobby(self, uuid):
+        uuid = uuid.upper()
+        while (self.alreadyExist(uuid) == True):
+            uuid = self.generateUUID().upper()
         newLobby = Lobby(uuid)
         self.__lobby.append(newLobby)
-        print(uuid)
