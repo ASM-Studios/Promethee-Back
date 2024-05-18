@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from lobby.Player import Player
+from lobby.LobbyManager import lobby_manager
 import sys
 
 enter_lobby_by_id_routes = Blueprint('enter_lobby_by_id', __name__)
@@ -33,6 +34,7 @@ def enter_lobby_by_id():
         new_lobby = lobby_manager.createLobby(lobbyId)
         new_lobby.addUser(player)
         new_lobby.addCreator(player.getName())
+        new_lobby.setCurrent(player)
         lobby_manager.get_lobbies().append(new_lobby)
         return jsonify({
             "lobbyId": new_lobby.getUUID(),

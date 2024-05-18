@@ -1,4 +1,6 @@
 from . import *
+from lobby.Player import Player
+
 
 class Lobby:
     class LobbyFull(Exception):
@@ -14,6 +16,7 @@ class Lobby:
         self.__uuid = uuid
         self.__players = {}
         self.__maxUser = maxUser
+        self.__current = None
 
     def isConnected(self, player):
         for i in self.__players:
@@ -54,3 +57,24 @@ class Lobby:
 
     def getUsers(self):
         return list(self.__players.values())
+
+    def setCurrent(self, username):
+        self.__current = username
+
+    def getCurrent(self):
+        return self.__current
+
+    def getNext(self):
+        users = self.getUsers()
+        if not users:
+            return None
+
+        current_index = next((index for index, player in enumerate(users) if player.getName() == self.__current), None)
+        if current_index is None:
+            self.__current = users[0].getName()
+        else:
+            next_index = (current_index + 1) % len(users)
+            self.__current = users[next_index].getName()
+        return self.__current
+
+

@@ -1,5 +1,7 @@
-from flask import Blueprint, jsonify
 import random
+
+from flask import Blueprint, jsonify
+
 from lobby import questions
 
 question_routes = Blueprint('questions', __name__)
