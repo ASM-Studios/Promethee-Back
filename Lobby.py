@@ -24,7 +24,6 @@ class Lobby:
         return False
 
     def addUser(self, username: str):
-        print(username, file=sys.stderr)
         if self.isFull():
             raise self.LobbyFull()
         else:

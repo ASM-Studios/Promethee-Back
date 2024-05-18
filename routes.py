@@ -29,10 +29,8 @@ def enter_lobby_by_id():
     if lobbyId:
         for lobby in lobby_manager.get_lobbies():
             if lobby.getUUID() == lobbyId:
-                for p in lobby.getUsers():
-                    print(p.getName(), file=sys.stderr)
-                    if p.getName() == player.getName():
-                        return jsonify({"error": "Username is already taken"}), 400
+                if lobby.getPlayer(username) is not None:
+                    return jsonify({"error": "Username is already taken"}), 400
                 try:
                     lobby.addUser(player)
                     return jsonify({
@@ -53,10 +51,6 @@ def enter_lobby_by_id():
             "creator": player.getName(),
             "players": [{"username": player.getName(), "life": player.getLife()}]
         })
-    for lobby in lobby_manager.get_lobbies():
-        print(lobby.getUUID(), file=sys.stderr)
-        for player in lobby.getPlayers():
-            print(player.getName(), file=sys.stderr)
     return '', 200
 
 
@@ -76,18 +70,16 @@ def play_card():
     else:
         return jsonify({"error": "Lobby not found"}), 400
 
-    # Find the player and target
-    player = None
-    target_player = None
-    for player_ in lobby.getPlayers():
-        if player_.getName() == username:
-            player = player_
-        if player_.getName() == target:
-            target_player = player_
-    if not player:
+    # Check if the player is in the lobby
+    player = lobby.getPlayer(username)
+    if player is None:
         return jsonify({"error": "Player not found"}), 400
-    if not target_player and target is not None:
-        return jsonify({"error": "Target not found"}), 400
+
+    # Find the target player
+    if target is not None:
+        target_player = lobby.getPlayer(target)
+        if target_player is None:
+            return jsonify({"error": "Target not found"}), 400
 
     # Apply the card
     if action == 'heal':
