@@ -30,13 +30,17 @@ class Lobby:
             self.__players.append(player)
 
     def isFull(self):
-        if (len(self.__players) == self.__maxUser):
+        if len(self.__players) == self.__maxUser:
             return True
         else:
             return False
 
     def getUUID(self):
         return self.__uuid
+
+    def getPlayers(self):
+        return self.__players
+
 
 class LobbyManager:
     def __init__(self):
@@ -58,3 +62,6 @@ class LobbyManager:
         newLobby = Lobby(lobbyID)
         self.__lobby.append(newLobby)
         return newLobby
+
+    def get_lobbies(self):
+        return self.__lobby
