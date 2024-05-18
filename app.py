@@ -6,7 +6,7 @@ from Player import Player
 from Lobby import Lobby
 from flask import Flask
 from flask_cors import CORS, cross_origin
-from routes import routes
+from routes.routes import routes
 from Card import Card
 
 app = Flask(__name__)
