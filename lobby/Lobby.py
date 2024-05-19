@@ -47,7 +47,7 @@ class Lobby:
         self.__creator = creator
 
     def getPlayers(self):
-        return [{"username": player.getName(), "life": player.getLife()} for player in self.__players]
+        return [{"username": player.getName(), "life": player.getLife(), "asGamble": player.getAsGamble()} for player in self.__players]
 
     def getPlayer(self, username):
         for player in self.__players:
@@ -76,5 +76,3 @@ class Lobby:
             next_index = (current_index + 1) % len(users)
             self.__current = users[next_index].getName()
         return self.__current
-
-

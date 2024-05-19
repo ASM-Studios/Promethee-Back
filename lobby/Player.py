@@ -8,6 +8,7 @@ class Player:
         self.__name = name
         self.__life = life
         self.__cards = []
+        self.asGamble= False
 
     def getName(self):
         return self.__name
@@ -19,7 +20,13 @@ class Player:
         return self.__life
 
     def setLife(self, life):
-        self.__life = life
+        self.__life = 20 if life > 20 else life
+
+    def setAsGamble(self, value):
+        self.asGamble = value
+
+    def getAsGamble(self):
+        return self.asGamble
 
     def addCard(self, card):
         self.__cards.append(card)
