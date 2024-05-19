@@ -6,6 +6,18 @@ A brief description of what this project does and who it's for.
 
 Instructions on how to install the project or setup the development environment.
 
+### Requirements
+
+- Python 3.8
+- Pip
+
+Create a python venv and activate it:
+```bash
+python3 -m venv .venv
+source venv/bin/activate
+```
+
+Install the required packages:
 ```bash
 pip install -r requirements.txt
 ```
@@ -14,9 +26,16 @@ pip install -r requirements.txt
 
 Instructions on how to use the project after installation.
 
+### Running the server
+
+To run the server, you need to set the PYTHONPATH environment variable to the project directory:
 ```bash
 export PYTHONPATH="${PYTHONPATH}:/path/to/project"
-flask run --host=0.0.0.0 --port=8080
+```
+
+Then, run the following command to start the server:
+```bash
+flask run --host=localhost --port=8080
 ```
 
 ## Routes
