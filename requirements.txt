@@ -41,3 +41,4 @@ typing_extensions==4.11.0
 ujson==5.9.0
 Werkzeug==3.0.1
 wheel==0.43.0
+gunicorn==20.1.0

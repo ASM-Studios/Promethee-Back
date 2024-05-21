@@ -35,7 +35,7 @@ export PYTHONPATH="${PYTHONPATH}:/path/to/project"
 
 Then, run the following command to start the server:
 ```bash
-flask run --host=localhost --port=8080
+flask run --host=0.0.0.0 --port=8080
 ```
 
 ## Routes
